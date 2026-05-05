@@ -1,57 +1,25 @@
 package com.apps.quantitymeasurement;
 
 /**
- * QuantityMeasurementApp - UC1: Feet measurement equality
- * 
- * This class is responsible for checking the equality of two numerical values
- * measured in feet in the Quantity Measurement Application.
+ * UC4: Extended Unit Support
+ * Demonstrates scalability of generic design by adding Yards and Centimeters.
  */
 public class QuantityMeasurementApp {
 
-    // Inner class to represent Feet measurement
-    public static class Feet {
-        private final double value;
-
-        public Feet(double value) {
-            this.value = value;
-        }
-
-        /**
-         * Override equals() method to compare two Feet objects based on their value
-         * 
-         * Important Checks:
-         * 1. Reference Check: If both references point to the same object, return true
-         * 2. Null Check: If the compared object is null, return false
-         * 3. Type Check: If the compared object is not of type Feet, return false
-         * 4. Value Comparison: Use Double.compare() to compare the double values for equality
-         * 
-         * @param obj The object to compare with
-         * @return true if both Feet objects have the same value, false otherwise
-         */
-        @Override
-        public boolean equals(Object obj) {
-            // 1. Reference Check
-            if (this == obj) {
-                return true;
-            }
-
-            // 2. Null Check and 3. Type Check
-            if (obj == null || getClass() != obj.getClass()) {
-                return false;
-            }
-
-            // 4. Value Comparison
-            Feet feet = (Feet) obj;
-            return Double.compare(feet.value, value) == 0;
-        }
+    public static boolean demonstrateLengthComparison(double value1, Length.LengthUnit unit1, 
+                                                       double value2, Length.LengthUnit unit2) {
+        Length length1 = new Length(value1, unit1);
+        Length length2 = new Length(value2, unit2);
+        return length1.equals(length2);
     }
 
-    // Main method to demonstrate Feet equality check
     public static void main(String[] args) {
-        Feet feet1 = new Feet(1.0);
-        Feet feet2 = new Feet(1.0);
-        
-        System.out.println("Input: 1.0 ft and 1.0 ft");
-        System.out.println("Output: Equal (" + feet1.equals(feet2) + ")");
+        // Yard and Inches comparison
+        System.out.println("1 Yard vs 36 Inches: " + 
+            demonstrateLengthComparison(1.0, Length.LengthUnit.YARDS, 36.0, Length.LengthUnit.INCHES));
+
+        // Centimeters and Feet comparison
+        System.out.println("30.48 cm vs 1 Foot: " + 
+            demonstrateLengthComparison(30.48, Length.LengthUnit.CENTIMETERS, 1.0, Length.LengthUnit.FEET));
     }
 }
