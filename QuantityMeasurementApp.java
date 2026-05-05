@@ -1,25 +1,34 @@
 package com.apps.quantitymeasurement;
 
 /**
- * UC4: Extended Unit Support
- * Demonstrates scalability of generic design by adding Yards and Centimeters.
+ * API Wrapper and demonstration class for the Quantity Measurement Application.
  */
 public class QuantityMeasurementApp {
 
-    public static boolean demonstrateLengthComparison(double value1, Length.LengthUnit unit1, 
-                                                       double value2, Length.LengthUnit unit2) {
-        Length length1 = new Length(value1, unit1);
-        Length length2 = new Length(value2, unit2);
-        return length1.equals(length2);
+    public static boolean demonstrateLengthEquality(Length l1, Length l2) {
+        return l1.equals(l2);
+    }
+
+    public static Length demonstrateLengthConversion(double val, Length.LengthUnit from, Length.LengthUnit to) {
+        return new Length(val, from).convertTo(to);
+    }
+
+    public static Length demonstrateLengthAddition(Length l1, Length l2, Length.LengthUnit target) {
+        return l1.add(l2, target);
     }
 
     public static void main(String[] args) {
-        // Yard and Inches comparison
-        System.out.println("1 Yard vs 36 Inches: " + 
-            demonstrateLengthComparison(1.0, Length.LengthUnit.YARDS, 36.0, Length.LengthUnit.INCHES));
+        // UC4: Feet to Inch Comparison
+        Length oneFoot = new Length(1.0, Length.LengthUnit.FEET);
+        Length twelveInches = new Length(12.0, Length.LengthUnit.INCHES);
+        System.out.println("1 ft == 12 in: " + oneFoot.equals(twelveInches));
 
-        // Centimeters and Feet comparison
-        System.out.println("30.48 cm vs 1 Foot: " + 
-            demonstrateLengthComparison(30.48, Length.LengthUnit.CENTIMETERS, 1.0, Length.LengthUnit.FEET));
+        // UC5: Yard to Foot Conversion
+        Length yardToFeet = demonstrateLengthConversion(1.0, Length.LengthUnit.YARDS, Length.LengthUnit.FEET);
+        System.out.println("1 Yard converted to Feet: " + yardToFeet);
+
+        // UC7: Addition with explicit target unit
+        Length sumInYards = demonstrateLengthAddition(oneFoot, twelveInches, Length.LengthUnit.YARDS);
+        System.out.println("1 ft + 12 in in Yards: " + sumInYards);
     }
 }
